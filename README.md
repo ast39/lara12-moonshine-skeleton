@@ -1,6 +1,6 @@
-# Rest API Skeleton
+# Rest API Skeleton + MoonShine Admin
 
-Rest API Skeleton for Laravel
+Laravel-проект с **REST API** (JWT) и **админ-панелью MoonShine** (сессионная авторизация). Два независимых контура: API для мобильных/внешних клиентов и админка для управления контентом и пользователями админки.
 
 ## Требования
 
@@ -9,6 +9,16 @@ Rest API Skeleton for Laravel
 - **Node.js** и **npm** (для фронта/сборки)
 - **БД**: PostgreSQL или MySQL
 - **Redis** (опционально, для кэша/очередей)
+
+## Архитектура
+
+| Контур        | URL-префикс | Авторизация | Пользователи              |
+|---------------|-------------|-------------|----------------------------|
+| **REST API**  | `/api/v1`   | JWT (guard `api`) | Таблица `users`          |
+| **Админка**  | `/admin`    | Сессия (guard `moonshine`) | Таблица `moonshine_users` |
+
+- API: токены через `POST /api/v1/auth/login`, далее заголовок `Authorization: Bearer <token>`.
+- Админка: логин по email/паролю на `/admin/login`, сессия и cookie.
 
 ## Развёртывание приложения
 
@@ -32,19 +42,27 @@ php artisan jwt:secret
 
 **JWT:** ключ задаётся командой `php artisan jwt:secret` (пишет `JWT_SECRET` в `.env`). Варианты: `--show` — только показать; `--force` — перезаписать без подтверждения. Время жизни токена и окно refresh настраиваются в `.env`: `JWT_TTL` (минуты, по умолчанию 60), `JWT_REFRESH_TTL` (минуты, по умолчанию 20160).
 
+**MoonShine:** в `.env` можно задать `MOONSHINE_TITLE` и `MOONSHINE_ROUTE_PREFIX` (по умолчанию `admin`).
+
 ### 3. База данных
 
 ```bash
 php artisan migrate
 ```
 
-При необходимости:
+Миграции создают в том числе таблицы для MoonShine (`moonshine_users`, `moonshine_user_roles` и др.).
+
+### 4. Пользователь админки (MoonShine)
+
+После первого развёртывания создайте суперпользователя админки:
 
 ```bash
-php artisan db:seed
+php artisan moonshine:user --username=admin@example.com --name="Admin" --password=ваш_пароль
 ```
 
-### 4. Фронт и сборка (если нужны)
+Дополнительных админов и роли можно создавать в админке: разделы «Admins» и «Roles».
+
+### 5. Фронт и сборка (если нужны)
 
 ```bash
 npm install
@@ -57,7 +75,7 @@ npm run build
 npm run dev
 ```
 
-### 5. Запуск
+### 6. Запуск
 
 Локально:
 
@@ -72,14 +90,19 @@ php artisan serve
 php artisan queue:work
 ```
 
-### 6. Дополнительно
+### 7. Дополнительно
 
 **Swagger (OpenAPI):**
 - Первый раз или после изменений в OA-атрибутах контроллеров/ресурсов перегенерируйте документацию: `make swagger` или `php artisan l5-swagger:generate`.
 - UI доступен по адресу из конфига (например `/api/documentation`).
 
+**MoonShine:**
+- Админка: `http://localhost:8000/admin` (или ваш `APP_URL` + значение `MOONSHINE_ROUTE_PREFIX`).
+- Конфиг: `config/moonshine.php`. Ресурсы и страницы регистрируются в `app/Providers/MoonShineServiceProvider.php`, меню — в `app/MoonShine/Layouts/MoonShineLayout.php`.
+
 **Продакшен:**
 - Кэш конфига: `php artisan config:cache`, `php artisan route:cache`.
+- Оптимизация MoonShine: `php artisan moonshine:optimize`.
 
 ---
 

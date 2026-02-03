@@ -30,13 +30,13 @@ class TestModel extends Model
     ];
 
     protected $casts = [
-        'created_at' => 'timestamp',
-        'updated_at' => 'timestamp',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
     ];
 
     protected $fillable = [
-        'id', 'title', 'description',
-        'created_at', 'updated_at',
+        'title',
+        'description',
     ];
 
     protected $hidden = [];

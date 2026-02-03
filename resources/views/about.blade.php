@@ -235,7 +235,7 @@
             <span class="tech-item">Laravel 12</span>
             <span class="tech-item">PHP 8.2+</span>
             <span class="tech-item">PostgreSQL</span>
-            {{-- <span class="tech-item">MoonShine</span> --}}
+            <span class="tech-item">MoonShine</span>
             <span class="tech-item">JWT</span>
             <span class="tech-item">AWS S3</span>
             <span class="tech-item">Swagger/OpenAPI</span>
@@ -246,6 +246,7 @@
             <a href="{{ url('/api') }}" target="_blank">API</a> |
             <a href="{{ url('/api/swagger') }}" target="_blank">Swagger UI</a> |
             <a href="{{ url('/api/docs') }}" target="_blank">API Swagger JSON</a> |
+            <a href="{{ url(config('moonshine.prefix', 'admin')) }}" target="_blank">Админка (MoonShine)</a> |
             <a href="{{ route('pre-commit') }}">Pre-Commit</a> |
             <a href="{{ url('/telescope') }}" target="_blank">Telescope</a>
         </div>
