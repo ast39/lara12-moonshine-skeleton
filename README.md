@@ -12,10 +12,15 @@ Laravel-проект с **REST API** (JWT) и **админ-панелью MoonSh
 
 ## Архитектура
 
-| Контур        | URL-префикс | Авторизация | Пользователи              |
-|---------------|-------------|-------------|----------------------------|
-| **REST API**  | `/api/v1`   | JWT (guard `api`) | Таблица `users`          |
-| **Админка**  | `/admin`    | Сессия (guard `moonshine`) | Таблица `moonshine_users` |
+- **REST API**
+  - **URL-префикс**: `/api/v1`
+  - **Авторизация**: JWT (guard `api`)
+  - **Пользователи**: таблица `users`
+
+- **Админка (MoonShine)**
+  - **URL-префикс**: `/admin`
+  - **Авторизация**: сессия (guard `moonshine`)
+  - **Пользователи админки**: таблица `moonshine_users`
 
 - API: токены через `POST /api/v1/auth/login`, далее заголовок `Authorization: Bearer <token>`.
 - Админка: логин по email/паролю на `/admin/login`, сессия и cookie.

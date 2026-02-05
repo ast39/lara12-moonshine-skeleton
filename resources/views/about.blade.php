@@ -247,8 +247,8 @@
             <a href="{{ url('/api/swagger') }}" target="_blank">Swagger UI</a> |
             <a href="{{ url('/api/docs') }}" target="_blank">API Swagger JSON</a> |
             <a href="{{ url(config('moonshine.prefix', 'admin')) }}" target="_blank">Админка (MoonShine)</a> |
-            <a href="{{ route('pre-commit') }}">Pre-Commit</a> |
-            <a href="{{ url('/telescope') }}" target="_blank">Telescope</a>
+            <a href="{{ route('pre-commit') }}">Pre-Commit</a>@env('local')
+            | <a href="{{ url('/telescope') }}" target="_blank">Telescope</a>@endenv
         </div>
     </div>
 </body>
