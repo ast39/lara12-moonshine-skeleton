@@ -95,6 +95,12 @@ php artisan serve
 php artisan queue:work
 ```
 
+Если установлен Laravel Horizon (мониторинг и управление очередями), для воркеров очереди в продакшене и на стендах предпочтительно использовать:
+
+```bash
+php artisan horizon
+```
+
 ### 7. Дополнительно
 
 **Swagger (OpenAPI):**
